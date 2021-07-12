@@ -13,10 +13,6 @@
   include_tasks: install-ubuntu-cuda-repo.yml
   when: ansible_distribution == 'Ubuntu' and nvidia_driver_ubuntu_install_from_cuda_repo
 
-- name: redhat family install tasks
-  include_tasks: install-redhat.yml
-  when: ansible_os_family == 'RedHat'
-
 - name: create persistenced override dir
   file:
     path: /etc/systemd/system/nvidia-persistenced.service.d/
@@ -45,7 +41,7 @@
   template:
     src: nvidia.conf.j2
     dest: "{{ nvidia_driver_module_file }}"
-    mode: '0644'
+    mode: "0644"
 
 - name: reboot after driver install
   reboot:
